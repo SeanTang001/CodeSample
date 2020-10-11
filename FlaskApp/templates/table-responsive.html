@@ -6,7 +6,7 @@
 		<meta name="description" content="Table Responsive" />
 		<meta name="keywords" content="table, responsive" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link href="/static/table-responsive.css" media="screen" type="text/css" rel="stylesheet" />
 		<!-- <style>
 			/* .map {
@@ -32,19 +32,120 @@
 		<div id="map"></div>
 		<script>
 			var map;
-			var address = "new york city";
+
+			function Get(yourUrl){
+				var Httpreq = new XMLHttpRequest(); // a new request
+				Httpreq.open("GET",yourUrl,false);
+				Httpreq.send(null);	
+				return Httpreq.responseText;          
+			}
+
 			function initMap() {
-				const myLatLng = { lat:  -34.398, lng: 131.044};
 				map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 8,
-				center: {lat: -34.398, lng: 131.044}
+				center: {lat: 37.658428, lng: -121.876999}
 				});
-				new google.maps.Marker({
-					position: myLatLng,
-					map,
-					title: "Hello World!",
-					label: "booo hoo boo",					
-				});
+
+				var walmart = JSON.parse(Get("http://127.0.0.1:8000/a/walmart"));
+				var target = JSON.parse(Get("http://127.0.0.1:8000/a/target"));
+				var safeway = JSON.parse(Get("http://127.0.0.1:8000/a/safeway"));
+
+				
+				console.log(walmart);
+				console.log(target);
+				console.log(safeway);
+				// var x = JSON.parse(Get("http://open.mapquestapi.com/geocoding/v1/address?key=k75O1JHq26xEvmNGmd5jUCY72bGGiKH5&location="+walmart.data[0].address+" CA"));
+				// console.log(x.results[0].locations[0].displayLatLng.lat);
+				// console.log(x.results[0].locations[0].displayLatLng.lng);
+
+				var a = "http://www.mapquestapi.com/geocoding/v1/batch?key=k75O1JHq26xEvmNGmd5jUCY72bGGiKH5";
+				for (i=0;i<=Object.keys(walmart.data).length;i++){ 
+					try{
+						a = a+"&location="+walmart.data[i].address+",CA";
+					}catch(error){
+						console.log(error.message);
+					}
+				}	
+				console.log(a);
+				var x = JSON.parse(Get(a));
+				console.log(x);
+				
+				for (i=0;i<=Object.keys(walmart.data).length;i++){ 
+					try{
+						// console.log(x.results[0].locations[0].displayLatLng.lat);
+						// console.log(x.results[0].locations[0].displayLatLng.lng);
+						var myLatLng = {lat: x.results[i].locations[0].displayLatLng.lat, lng: x.results[i].locations[0].displayLatLng.lng}
+						var marker = new google.maps.Marker({
+							position: myLatLng,
+							label: "Walmart",					
+							map,
+							url: "http://127.0.0.1:8000/b/walmart/"+walmart.data[i].address+"",
+						});
+						google.maps.event.addListener(marker, 'click', function() {
+							window.location.href = this.url;
+						});
+					}
+					catch(err){
+						console.log(err.message);
+					}
+				}
+				console.log(Object.keys(target.data).length)
+
+				var a = "http://www.mapquestapi.com/geocoding/v1/batch?key=k75O1JHq26xEvmNGmd5jUCY72bGGiKH5";
+				for (i=0;i<=Object.keys(target.data).length;i++){ 
+					try{
+						a = a+"&location="+target.data[i].address+",CA";
+					}catch(error){
+						console.log(error.message);
+					}
+				}
+				console.log(a);
+				var x = JSON.parse(Get(a));
+				console.log(x);
+				for (i=0;i<=Object.keys(target.data).length;i++){ 
+					try{
+						// console.log(x.results[0].locations[0].displayLatLng.lat);
+						// console.log(x.results[0].locations[0].displayLatLng.lng);
+						var myLatLng = {lat: x.results[i].locations[0].displayLatLng.lat, lng: x.results[i].locations[0].displayLatLng.lng}
+						var marker = new google.maps.Marker({
+							position: myLatLng,
+							label: "Target",					
+							map,
+							url: "http://127.0.0.1:8000/b/target/"+target.data[i].address+"",
+						});
+						google.maps.event.addListener(marker, 'click', function() {
+							window.location.href = this.url;
+						});
+					}
+					catch(err){
+						console.log(err.message);
+					}
+				}
+
+				var a = "http://www.mapquestapi.com/geocoding/v1/batch?key=k75O1JHq26xEvmNGmd5jUCY72bGGiKH5";
+
+				for (i=0;i<=Object.keys(safeway.data).length;i++){ 
+					try{
+						a = a+"&location="+safeway.data[i].address+",CA";
+					}catch(error){
+						console.log(error.message);
+					}	
+				}				
+				console.log(a);
+				var x = JSON.parse(Get(a));
+				console.log(x);
+				for (i=0;i<=Object.keys(safeway.data).length;i++){ 
+					var myLatLng = {lat: x.results[0].locations[0].displayLatLng.lat, lng: x.results[0].locations[0].displayLatLng.lng}
+					var marker = new google.maps.Marker({
+						position: myLatLng,
+						label: "Safeway",					
+						map,
+						url: "http://127.0.0.1:8000/b/safeway/"+safeway.data[i].address+"",
+					});
+					google.maps.event.addListener(marker, 'click', function() {
+					window.location.href = this.url;
+					});
+				}
 			}
 		</script>
 		<script async defer
