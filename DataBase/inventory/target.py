@@ -71,9 +71,9 @@ def searchquery(itemtype, itemids, storeId, address):
     return itemType
 
 def target(filename):
-    items = json.load(open("item.json"))
-    storeId = json.load(open("target_id.json"))	
-    tcin = json.load(open("tcin.json"))
+    items = json.load(open("../jsons/item.json"))
+    storeId = json.load(open("../jsons/target_id.json"))	
+    tcin = json.load(open("../jsons/tcin.json"))
     pp = pprint.PrettyPrinter(indent=2)
     t = time.time()
     maindict = {}

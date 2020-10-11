@@ -7,11 +7,11 @@ import multiprocessing
 import threading
 from fake_useragent import UserAgent
 
-items = json.load(open("item.json"))
-targetId = json.load(open("target_id.json"))
-walmartId = json.load(open("walmart_id.json"))
-safewayId = json.load(open("safeway_id.json"))
-tcin = json.load(open("tcin.json"))
+items = json.load(open("../jsons/item.json"))
+targetId = json.load(open("../jsons/target_id.json"))
+walmartId = json.load(open("../jsons/walmart_id.json"))
+safewayId = json.load(open("../jsons/safeway_id.json"))
+tcin = json.load(open("../jsons/tcin.json"))
 pp = pprint.PrettyPrinter(indent=2)
 ts = time.time()
 maindict = {}
@@ -59,7 +59,7 @@ def main():
 	return maindict
 
 def anaylsis():
-	res = json.load(open("res.json"))
+	res = json.load(open("../jsons/res.json"))
 	a = res.keys()
 	maindict = {}
 	for i in a:
@@ -71,7 +71,7 @@ def anaylsis():
 	return maindict
 
 def test():
-	x = open("res.json", "w")
+	x = open("../jsons/res.json", "w")
 	x.write(json.dumps(main(), indent=2))
 	x.close()
 

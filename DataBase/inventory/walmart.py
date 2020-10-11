@@ -11,7 +11,7 @@ ua = UserAgent()
 pp = pprint.PrettyPrinter(indent=2)
 
 
-id_upc = json.load(open("id_upc.json"))
+id_upc = json.load(open("../jsons/id_upc.json"))
 # id_upc = {"s":"s"}
 # g = open("upc.json", "r")
 # #x = requests.get("https://www.walmart.com/store/finder?location=95127&distance=100")
@@ -195,9 +195,9 @@ def statquery(upc, idz):
 def walmart(size, filename):
 	print(str(size))
 	t = time.time()
-	cities = json.load(open("walmart_id.json"))
-	items = json.load(open("item.json"))
-	city = json.load(open("city.json"))
+	cities = json.load(open("../jsons/walmart_id.json"))
+	items = json.load(open("../jsons/item.json"))
+	city = json.load(open("../jsons/city.json"))
 	items = ["Hand-sanitizer"]
 	# cities = {"1789": ["Lodi", "Walmart Supercenter ", "1601 S Lower Sacramento Rd"]}
 	maindict = {}

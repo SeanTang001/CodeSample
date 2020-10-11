@@ -33,7 +33,7 @@ def parse(x):
     return h
 
 
-x = open("target_page.html", "r+")
+x = open("../jsons/target_page.html", "r+")
 b = x.read()
 x.close()
 g = json.loads(b)
@@ -50,7 +50,7 @@ print(maindict)
 # for i in range(len(b)):
 #     search(b[i])
 #     print maindict
-x = open("target_page.html", "w")
+x = open("../jsons/target_page.html", "w")
 x.write(json.dumps(maindict, indent=2))
 x.close()
 print(time.time() - t)

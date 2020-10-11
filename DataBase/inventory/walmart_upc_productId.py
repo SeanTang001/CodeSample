@@ -28,7 +28,7 @@ def parse(l):
 
 
 def byname():
-    item = json.load(open("item.json"))
+    item = json.load(open("../jsons/item.json"))
     for i in item:
         print i 
         x = requests.get("https://www.walmart.com/search/?query="+i+"")
@@ -41,7 +41,7 @@ def byname():
             parse(l)
 
 def byid():
-    ids = json.load(open("res2.json"))
+    ids = json.load(open("../jsons/res2.json"))
     temp = []
     for i in range(len(ids)):
         print i
@@ -55,14 +55,14 @@ def byid():
             page = bs4.BeautifulSoup(x.text, features="html.parser")
             l = json.loads(page.find('script', id = 'item', type='application/json').text)
             temp.append(l)
-    json.dump(temp, open("res4.json","w"))
+    json.dump(temp, open("../jsons/res4.json","w"))
  
 
 byid()
-res = json.load(open("res4.json", "r"))
+res = json.load(open("../jsons/res4.json", "r"))
 for i in res:
     maindict[i["item"]["product"]["buyBox"]["products"][0]["usItemId"]] = i["item"]["product"]["buyBox"]["products"][0]["upc"]
-res = open("res4.json", "w")
+res = open("../jsons/res4.json", "w")
 res.write(json.dumps(maindict, indent=2))
 res.close()    
 

@@ -8,7 +8,7 @@ import io
 
 
 def get_id():
-    zip = json.load(open("zips.json"))
+    zip = json.load(open(".../jsons/zips.json"))
     maindict = {}
     for i in zip:
         x = json.loads(requests.get("https://www.safeway.com/abs/pub/xapi/storeresolver/all?zipcode="+i+"&radius=50&size=10").text)
@@ -17,7 +17,7 @@ def get_id():
                 maindict[x["instore"]["stores"][k]["locationId"]] = [x["instore"]["stores"][k]["address"]["line1"], x["instore"]["stores"][k]["address"]["city"]]
         except:
             pass
-    res = open("safeway_id.json", "w")
+    res = open("../jsons/safeway_id.json", "w")
     res.write(json.dumps(maindict, indent=2))
     res.close()
 
@@ -49,12 +49,12 @@ def searchquery(itemtype, storeId, address):
 def safeway(filename):
     t = time.time()
     maindict = {}
-    storeId = json.load(open("safeway_id.json"))
+    storeId = json.load(open("../jsons/safeway_id.json"))
     storeId = {"1476": [
     "1300 W San Carlos St", 
     "San Jose"
   ]}
-    items = json.load(open("item.json"))
+    items = json.load(open("../jsons/item.json"))
     for i in items:
         maindict[i] = []
         for x in storeId.keys():
