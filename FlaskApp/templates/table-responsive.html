@@ -22,9 +22,9 @@
 
 		<div class="topnav">
 			<a class="active" href="/">Home</a>
-			<a href="/trends">Historical Trends</a>
+			<!-- <a href="/trends">Historical Trends</a> -->
 			<a href="/downloads">Download Data</a>
-			<a href="#about">About</a>
+			<!-- <a href="#about">About</a> -->
 			</div> 
 		
 		<h1><span class="blue"></span>Inventory<span class="blue"></span> <span class="yellow">Tracker</pan></h1>
@@ -79,10 +79,10 @@
 							position: myLatLng,
 							label: "Walmart",					
 							map,
-							url: "http://127.0.0.1:8000/b/walmart/"+walmart.data[i].address+"",
+							url: "/walmart/"+walmart.data[i].address+"",
 						});
 						google.maps.event.addListener(marker, 'click', function() {
-							window.location.href = this.url;
+							window.open(this.url);
 						});
 					}
 					catch(err){
@@ -111,10 +111,11 @@
 							position: myLatLng,
 							label: "Target",					
 							map,
-							url: "http://127.0.0.1:8000/b/target/"+target.data[i].address+"",
+							url: "/target/"+target.data[i].address+"",
 						});
 						google.maps.event.addListener(marker, 'click', function() {
-							window.location.href = this.url;
+							// window.location.href = this.url;
+							window.open(this.url);
 						});
 					}
 					catch(err){
@@ -140,10 +141,10 @@
 						position: myLatLng,
 						label: "Safeway",					
 						map,
-						url: "http://127.0.0.1:8000/b/safeway/"+safeway.data[i].address+"",
+						url: "/safeway/"+safeway.data[i].address+"",
 					});
 					google.maps.event.addListener(marker, 'click', function() {
-					window.location.href = this.url;
+						window.open(this.url);
 					});
 				}
 			}

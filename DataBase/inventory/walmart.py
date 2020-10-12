@@ -150,7 +150,7 @@ def searchquery(itemtype, storeId, address, size):
 		if ("Unknown" in str(status) or status == -1):
 			continue
 
-		res.append({"name":name, "upc":upc, "price":price, "status":status})
+		res.append({"name":name, "upc":upc, "price":price/100, "status":status})
 	if (len(res)==0):
 		return None
 	res = sortz(res)

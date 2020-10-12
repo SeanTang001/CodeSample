@@ -32,8 +32,11 @@ def parse_by_store(maindict):
 			try:
 				res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
 			except:
-				res[b["type"]][b["address"]] = {}
-				res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
+				if (b["type"]=="target"):
+					continue
+				else:
+					res[b["type"]][b["address"]] = {}
+					res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
 
 	for x in res.keys():
 		for z in res[x].keys():

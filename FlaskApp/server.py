@@ -15,6 +15,9 @@ def trends():
 def downloads():
     return render_template("downloads.html")
 
+@app.route("/<path:category>/<path:address>", methods = ["GET"])
+def display_cat(category, address):
+    return render_template("category.html", data = {"category":str(category), "address":address, "img_path" : "/static/"+category+"/"+address.replace(" ", "_")+".png"})
 #AIzaSyA5aevdcRxbI2nBJ8UGTh_m7kESdN0AVqA
 
 
