@@ -1,4 +1,4 @@
-# CodeSample
+# Inventory Tracker
 
 Navigate to desired graph and table by clicking desired store
 ![home and map](https://github.com/SeanTang001/CodeSample/blob/master/a.png)
