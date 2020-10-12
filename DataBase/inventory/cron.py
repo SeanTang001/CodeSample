@@ -1,15 +1,13 @@
 import os
-x = os.system("ls")
-print x
 import time
 import db_loader, inventory, graph_loader, download_loader
-
+import json
 #run ../inventory/load_db every 1 hr
 
 counter = 0
 while True:
-
     res = inventory.main()
+    open("../jsons/res1.json", json.dumps(res))
     db_loader.db_load(res)
     download_loader.download_load()
     graph_loader.graph_load()

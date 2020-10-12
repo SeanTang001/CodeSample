@@ -3,8 +3,6 @@ import pprint
 import time
 import json
 from fake_useragent import UserAgent
-import pycurl
-import io
 
 r = requests.Session()
 ua = UserAgent()
@@ -192,14 +190,14 @@ def statquery(upc, idz):
 	print("upc: "+upc+" corrected price: "+str(price))
 	return price, status 
 
-def walmart(size, filename):
-	print(str(size))
+def walmart(filename):
+	size = 10
 	t = time.time()
 	cities = json.load(open("../jsons/walmart_id.json"))
 	items = json.load(open("../jsons/item.json"))
-	city = json.load(open("../jsons/city.json"))
+	#city = json.load(open("../jsons/city.json"))
 	items = ["Hand-sanitizer"]
-	# cities = {"1789": ["Lodi", "Walmart Supercenter ", "1601 S Lower Sacramento Rd"]}
+	cities = {"1789": ["Lodi", "Walmart Supercenter ", "1601 S Lower Sacramento Rd"]}
 	maindict = {}
 	a = list(cities.keys())
 	for i in range(len(a)):
@@ -207,7 +205,7 @@ def walmart(size, filename):
 	for i in range(len(a)):
 		maindict[cities[a[i]][0]][a[i].replace("#","")] = {"address":cities[a[i]][2]}
 		for x in range(len(items)):
-			res = searchquery(items[x], a[i].replace("#",""), size, cities[a[i]][2])
+			res = searchquery(items[x], a[i].replace("#",""), cities[a[i]][2], size)
 			if (res!=None):
 				maindict[cities[a[i]][0]][a[i].replace("#","")][items[x]] = res
 	pp.pprint(maindict)
@@ -217,7 +215,5 @@ def walmart(size, filename):
 	print(time.time()-t)
 	return maindict
 
-
-
 if __name__ == "__main__":
-	walmart(10, "res3.json")
+	walmart("res3.json")

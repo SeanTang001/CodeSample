@@ -3,8 +3,6 @@ import pprint
 import time
 import json
 from fake_useragent import UserAgent
-import pycurl
-import io
 
 
 def get_id():
@@ -42,7 +40,7 @@ def searchquery(itemtype, storeId, address):
         return None
     if (len(res["items"])==0):
         return None
-    res["summaryTotal"] = {"qunatityRank":10*float(len(res["items"]))/8}
+    res["summaryTotal"] = {"quantityRank":10*float(len(res["items"]))/8}
     res["items"] = res["items"][:5]
     return res
 

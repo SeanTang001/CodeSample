@@ -2,10 +2,7 @@ import requests
 import pprint
 import time
 import json
-import re
-import io 
 from fake_useragent import UserAgent
-import pycurl
 
 ua = UserAgent()
 r = requests.Session()
@@ -36,7 +33,8 @@ def search_item(item, count):
 def searchquery(itemtype, itemids, storeId, address):
     print("type: target id: "+storeId+"	itemtype: "+itemtype)
     items = ",".join(itemids)
-    x = get("https://redsky.target.com/v2/pdp/tcin/"+items+"?excludes=in_store_location,taxonomy,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics,esp,available_to_promise_network&storeId="+storeId+"")
+#https://redsky.target.com/v3/pdp/tcin/50953424,75566822,75662530,54278969,54605734?excludes=taxonomy,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics,child_items&storeId=2771&key=eb2551e4accc14f38cc42d32fbc2b2ea
+    x = get("https://redsky.target.com/v3/pdp/tcin/"+items+"?excludes=in_store_location,taxonomy,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics,esp,available_to_promise_network&storeId="+storeId+"&key=eb2551e4accc14f38cc42d32fbc2b2ea")
     rez = json.loads(x)
     res = []
     instock =0
@@ -57,9 +55,13 @@ def searchquery(itemtype, itemids, storeId, address):
                 ofs=ofs+1
                 x=1/0
             quantity = h["product"]["available_to_promise_store"]["products"][0]["locations"][0]["onhand_quantity"]
+            try:
+                res.append({"tcin":h["product"]["available_to_promise_store"]["products"][0]["product_id"], "status":status, "quantity":quantity, "price":h["product"]["price"]["listPrice"]["price"], "name":h["product"]["item"]["product_description"]["title"]})
+            except KeyError:
+                res.append({"tcin":h["product"]["available_to_promise_store"]["products"][0]["product_id"], "status":status, "quantity":quantity, "price":0, "name":h["product"]["item"]["product_description"]["title"]})            
         except:
             continue
-        res.append({"tcin":h["product"]["available_to_promise_store"]["products"][0]["product_id"], "status":status, "quantity":quantity, "price":h["product"]["price"]["listPrice"]["price"], "name":h["product"]["item"]["product_description"]["title"]})
+                       
     if (len(res)==0):
         return None
     itemType = {}
