@@ -51,10 +51,10 @@ def findAverage():
         res[a] = temp
     return res
 
-def makeTrendGraph():
-#type of goods : time vs score overall
-#type of goods : time vs score by stores
-#type of goods vs score overall
+# def makeTrendGraph():
+# #type of goods : time vs score overall
+# #type of goods : time vs score by stores
+# #type of goods vs score overall
 
 def makeStoreGraph():
 #time vs total score
@@ -97,7 +97,9 @@ def makeStoreGraph():
             pp.tight_layout()
             fig.savefig("../../FlaskApp/static/"+i+"/"+address.replace(" ", "_")+".png", bbox_inches="tight")
             pp.close()
-makeGraph()
+
+def graph_load():
+    makeStoreGraph()
 
 # pprint.pprint(average_finder())
 

@@ -11,12 +11,6 @@ walmart = list(client["inventory"]["walmart"].find({}, {"_id": 0 }))
 target = list(client["inventory"]["target"].find({}, {"_id": 0 }))
 safeway = list(client["inventory"]["safeway"].find({}, {"_id": 0 }))
 
-x = open("../../FlaskApp/static/data.json", "w")
-x.write(json.dumps({"walmart":walmart,"target":walmart,"safeway":walmart}))
-
-x = open("../../FlaskApp/static/data.csv", "w")
-csv_writer = csv.writer(x)
-
 def csv_write(obj, name, csv_writer, count):
     header = ["type", "address", "item type", "score", "stauts", "name", "price", "upc"]
     csv_writer.writerow(header)
@@ -35,9 +29,16 @@ def csv_write(obj, name, csv_writer, count):
                 csv_writer.writerow(row)
 
 
-csv_write(walmart, "walmart", csv_writer, 0)
-csv_write(walmart, "target", csv_writer, 1)
-csv_write(walmart, "safeway", csv_writer, 1)
+def download_load():
+    x = open("../../FlaskApp/static/data.json", "w")
+    x.write(json.dumps({"walmart":walmart,"target":walmart,"safeway":walmart}))
+
+    x = open("../../FlaskApp/static/data.csv", "w")
+    csv_writer = csv.writer(x)
+
+    csv_write(walmart, "walmart", csv_writer, 0)
+    csv_write(walmart, "target", csv_writer, 1)
+    csv_write(walmart, "safeway", csv_writer, 1)
 
 
 #type of goods : time vs score overall

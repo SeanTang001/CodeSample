@@ -47,4 +47,6 @@ def parse_by_store(maindict):
 	for i in resx.keys():
 		client["inventory"][i].insert_many(resx[i])
 
-			
+def db_load(res):
+	parse_by_store(res)
+	parse_by_type(res)
