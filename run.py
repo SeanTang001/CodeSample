@@ -1,5 +1,8 @@
 import os, subprocess, signal, time
 
+os.system("mkdir ./FlaskApp/static/safeway/")
+os.system("mkdir ./FlaskApp/static/target/")
+os.system("mkdir ./FlaskApp/static/walmart/")
 print("[+] started api server, web server, scraper, database loader, graph loader, download loader") 
 a = subprocess.Popen("cd ./DataBase/inventory; python cron.py", shell=True, stdout=subprocess.PIPE)
 b = subprocess.Popen("python ./FlaskApp/server.py", shell=True, stdout=subprocess.PIPE)
