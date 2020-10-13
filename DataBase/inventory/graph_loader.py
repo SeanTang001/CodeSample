@@ -26,14 +26,11 @@ def addDate():
     res = findAverage()
     for a in list(res.keys()):
         for b in list(res[a].keys()):
-            try:
-                client["inventory"][a].update({"address":b}, {"$addToSet":{"past":{datetime.datetime.now().strftime("%x"):res[a][b]}}})
-            except:
-                gendates()
-                client["inventory"][a].update({"address":b}, {"$addToSet":{"past":{datetime.datetime.now().strftime("%x"):res[a][b]}}})
+            client["inventory"][a].update({"address":b}, {"$addToSet":{"past":{datetime.datetime.now().strftime("%x"):res[a][b]}}})
 
 def findAverage():
-    t = {"walmart":walmart, "safeway":safeway, "target":target}
+    #t = {"walmart":walmart, "safeway":safeway, "target":target}
+    t = {"target":target}
     res ={}
     for a in list(t.keys()):
         b = t[a]
@@ -41,11 +38,15 @@ def findAverage():
         for i in b:
             ttl = 0
             for x in list(i.keys()):
-                if x == "address" or x == "_id":
+                if x == "address" or x == "_id" or x == "past":
                     continue
                 try:
                     ttl = ttl + i[x]["score"]
                 except:
+                    print i[x]
+                    print x
+                    print a
+                    print i[x]["score"]
                     pass
             temp[i["address"]] = ttl/17
         res[a] = temp
@@ -63,6 +64,9 @@ def makeStoreGraph():
     for i in stores:
         address = list(client["inventory"][i].find({}))
         for v in address:
+            addresz = v["address"]
+            print addresz.replace(" ", "_")
+            print v["_id"]
             #print(v["address"])
             #print(v.values()[0]["score"])
             #print len(v["past"])
@@ -79,7 +83,6 @@ def makeStoreGraph():
             axe[0].title.set_text("historic trend")
             axe[0].tick_params(axis='both', which='minor', labelsize=8)
             del(v["past"]) 
-            address = v["address"]
             del(v["address"])
             del(v["_id"])
 
@@ -93,9 +96,8 @@ def makeStoreGraph():
             # axe[1].tick_params(axis='both', which='minor', labelsize=8)
             a1 = axe[1].twinx()
             a1.plot(range(len(v.keys())), [10 for z in range(len(v.keys()))], "r")
-            print address.replace(" ", "_")
             pp.tight_layout()
-            fig.savefig("../../FlaskApp/static/"+i+"/"+address.replace(" ", "_")+".png", bbox_inches="tight")
+            fig.savefig("../../FlaskApp/static/"+i+"/"+addresz.replace(" ", "_")+".png", bbox_inches="tight")
             pp.close()
 
 def graph_load():

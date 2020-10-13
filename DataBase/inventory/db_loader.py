@@ -32,12 +32,8 @@ def parse_by_store(maindict):
 			try:
 				res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
 			except:
-				if (b["type"]=="target"):
-					continue
-				else:
-					print res, b
-					res[b["type"]][b["address"]] = {}
-					res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
+				res[b["type"]][b["address"]] = {}
+				res[b["type"]][b["address"]][a] = {"items":b["items"], "score":b["summaryTotal"]["quantityRank"]}
 
 	for x in res.keys():
 		for z in res[x].keys():
@@ -46,7 +42,16 @@ def parse_by_store(maindict):
 				resx[x][len(resx[x])-1][i] = res[x][z][i]
 
 	for i in resx.keys():
-		client["inventory"][i].insert_many(resx[i])
+		print i
+		for a in resx[i]:
+			print a
+			try:
+				del[a["_id"]]
+			except:
+				pass
+			if not (client["inventory"][i].update({"address":a["address"]}, {"$set":a})["updatedExisting"]):
+				client["inventory"][i].insert_many(resx[i])
+				break
 
 def db_load(res):
 	parse_by_store(res)
