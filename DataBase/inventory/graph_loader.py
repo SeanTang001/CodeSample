@@ -29,8 +29,8 @@ def addDate():
             client["inventory"][a].update({"address":b}, {"$addToSet":{"past":{datetime.datetime.now().strftime("%x"):res[a][b]}}})
 
 def findAverage():
-    #t = {"walmart":walmart, "safeway":safeway, "target":target}
-    t = {"target":target}
+    t = {"walmart":walmart, "safeway":safeway, "target":target}
+    #t = {"target":target}
     res ={}
     for a in list(t.keys()):
         b = t[a]

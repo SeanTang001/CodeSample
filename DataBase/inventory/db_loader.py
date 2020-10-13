@@ -42,9 +42,7 @@ def parse_by_store(maindict):
 				resx[x][len(resx[x])-1][i] = res[x][z][i]
 
 	for i in resx.keys():
-		print i
 		for a in resx[i]:
-			print a
 			try:
 				del[a["_id"]]
 			except:
@@ -56,3 +54,4 @@ def parse_by_store(maindict):
 def db_load(res):
 	parse_by_store(res)
 	parse_by_type(res)
+	print("[+]db done loading")

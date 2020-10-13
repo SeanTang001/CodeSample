@@ -20,11 +20,10 @@ if len(list(client["inventory"]["walmart"].find({}))) == 0:
 
 
 while True:
-#    res = inventory.main()
-#    x = open("../jsons/res1.json", "w")
-#    x.write(json.dumps(res))
-#    x.close()
-    res = json.load(open("../jsons/res1.json"))
+    res = inventory.main()
+    x = open("../jsons/res1.json", "w")
+    x.write(json.dumps(res))
+    x.close()
     db_loader.db_load(res)
     download_loader.download_load()
 
